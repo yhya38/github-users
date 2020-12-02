@@ -19,8 +19,8 @@ const Card = () => {
       <header>
         <img src={avatar_url} alt={name} />
         <div>
-          <h4>{name}</h4>
-          <p>@{twitter_username || "Yahiya Khan"}</p>
+          <h4>{name || "NULL"}</h4>
+          <p>@{twitter_username || name}</p>
         </div>
         <a href={html_url} target="_blank" rel="noopener noreferrer">
           follow
@@ -34,10 +34,10 @@ const Card = () => {
         </p>
         <p>
           <MdLocationOn />
-          {location || "Humnabad"}
+          {location || "Null"}
         </p>
         <a href={blog} target="_blank" rel="noopener noreferrer">
-          <MdLink /> {blog}
+          <MdLink /> {blog||"Null"}
         </a>
       </div>
     </Wrapper>

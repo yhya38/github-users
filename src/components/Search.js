@@ -1,9 +1,42 @@
-import React from 'react';
-import styled from 'styled-components';
-import { MdSearch } from 'react-icons/md';
-import { GithubContext } from '../context/context';
+import React from "react";
+import styled from "styled-components";
+import { MdSearch } from "react-icons/md";
+import { GithubContext } from "../context/context";
 const Search = () => {
-  return <h2>search component</h2>;
+  const [user, setUser] = React.useState("");
+  const { request, error, searchGithubUser, loading } = React.useContext(GithubContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user) {
+      searchGithubUser(user)
+    }
+  };
+  
+  return (
+    <section className="section">
+      <Wrapper className="section-center">
+        {error.show && (
+          <ErrorWrapper>
+            <p>{error.msg}</p>
+          </ErrorWrapper>
+        )}
+        <form onSubmit={handleSubmit} className="flex">
+          <div className="form-control">
+            <MdSearch />
+            <input
+              type="text"
+              placeholder="entet github user"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            />
+
+            {request > 0 && !loading && <button type="submit">search</button>}
+          </div>
+          <h3>request : {request} / 60</h3>
+        </form>
+      </Wrapper>
+    </section>
+  );
 };
 
 const Wrapper = styled.div`
@@ -25,6 +58,8 @@ const Wrapper = styled.div`
     column-gap: 0.5rem;
     border-radius: 5px;
     padding: 0.5rem;
+    margin-bottom: 10px;
+
     input {
       border-color: transparent;
       outline-color: var(--clr-grey-10);
@@ -67,6 +102,16 @@ const Wrapper = styled.div`
       svg {
         font-size: 0.85rem;
       }
+    }
+  }
+  @media (min-width: 900px) {
+    .flex {
+      display: flex !important;
+      align-items: center;
+    }
+    .form-control {
+      flex: 1;
+      margin-right: 10px;
     }
   }
   h3 {
